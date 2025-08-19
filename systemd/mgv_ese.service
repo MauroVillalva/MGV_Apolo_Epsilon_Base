@@ -1,0 +1,20 @@
+# Servicio de la app principal MGV_Apollo_Epsilon_Base
+# Ejecuta el paquete Python "mgv_ese" como módulo (-m),
+# arrancando desde la carpeta /src para que los imports locales funcionen.
+
+[Unit]
+Description=MGV_Apollo_Epsilon_Base - App principal
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=Argos
+WorkingDirectory=/home/Argos/MGV_Apollo_Epsilon_Base/src
+ExecStart=/home/Argos/MGV_Apollo_Epsilon_Base/venv/bin/python -m mgv_ese
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

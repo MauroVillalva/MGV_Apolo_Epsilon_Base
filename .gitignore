@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.bak*
+*.log
+logs/
+venv/
+.env
+# Evitamos duplicar el árbol viejo si existiera:
+fuente/

@@ -1,0 +1,16 @@
+[Unit]
+Description=MGV Heartbeat LED (AZUL) - recepción de comandos del semáforo
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=Argos
+WorkingDirectory=/home/Argos/MGV_Apollo_Epsilon_Base/src
+ExecStart=/home/Argos/MGV_Apollo_Epsilon_Base/venv/bin/python /home/Argos/MGV_Apollo_Epsilon_Base/src/heartbeat_led.py
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
