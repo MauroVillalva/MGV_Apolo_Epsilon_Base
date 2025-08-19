@@ -10,8 +10,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=Argos
-WorkingDirectory=/home/Argos/MGV_Apollo_Epsilon_Base/src
-ExecStart=/home/Argos/MGV_Apollo_Epsilon_Base/venv/bin/python -m mgv_ese
+WorkingDirectory=/home/Argos/MGV_Apolo_Epsilon_Base/src
+ExecStart=/home/Argos/MGV_Apolo_Epsilon_Base/venv/bin/python -m mgv_ese
 Environment=PYTHONUNBUFFERED=1
 Restart=always
 RestartSec=2
