@@ -1,0 +1,19 @@
+[Unit]
+Description=MGV_E.S.E API (Receptor Epsilon)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=Argos
+WorkingDirectory=/home/Argos/MGV_Apolo_Epsilon_Base
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/home/Argos/MGV_Apolo_Epsilon_Base/venv/bin/gunicorn \
+  --chdir /home/Argos/MGV_Apolo_Epsilon_Base \
+  --workers 2 --threads 2 --bind 127.0.0.1:5001 --timeout 30 \
+  wsgi:app
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
