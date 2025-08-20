@@ -34,3 +34,23 @@ Requiere `git` y `sudo`. El script crea/usa un virtualenv, instala dependencias 
 sudo apt update && sudo apt install -y git python3-venv
 bash -lc 'set -e; REPO=https://github.com/MauroVillalva/MGV_Apolo_Epsilon_Base.git; DIR=$HOME/MGV_Apolo_Epsilon_Base; [ -d "$DIR/.git" ] || git clone "$REPO" "$DIR"; git -C "$DIR" pull --ff-only; cd "$DIR"; ./bootstrap.sh'
 ```
+
+---
+
+## 🔌 Integración con Epsilon
+
+- Endpoint recomendado del semáforo: **`semaforo.local:80`** (o `IP:80`).
+- En `config.json` de Epsilon:
+
+```json
+{
+  "repetidores": {
+    "activo": true,
+    "bascula1": ["semaforo.local:80"]
+  }
+}
+```
+
+### Verificación
+- `curl -s http://semaforo.local/api/status | python3 -m json.tool`
+- `sudo tail -n 20 /var/log/nginx/access.log` debe mostrar `POST /post` 200 desde la IP de Epsilon.
