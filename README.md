@@ -95,4 +95,56 @@ curl -i -H "Host: $IP" -X POST http://$IP/post || true
 **Multi-placa**
 - Cada placa debe tener su propia IP y `server_name` con esa IP.
 - Epsilon debe enviar comandos a **cada IP** de placa por separado.
+### Ejemplo multi-placa
+
+```bash
+# Ejemplo multi-placa (bash + curl)
+# Requisitos: curl y jq
+IPS=(192.168.1.105 192.168.1.106)   # IPs de las placas
+PAYLOAD='{"red":"0","yellow":"1","green":"1","peso":"88888"}'
+
+# Envío de comandos a todas las placas
+for ip in "${IPS[@]}"; do
+  echo "POST -> http://$ip/post"
+  # Nota: usando URL con IP, el encabezado Host se envía como la IP automáticamente
+  curl -sS -X POST "http://$ip/post" \
+       -H "Content-Type: application/json" \
+       -d "$PAYLOAD" \
+    | jq -r '.state_en.last_update_at'
+done
+
+# Healthcheck rápido de todas
+echo
+echo "Healthcheck:"
+for ip in "${IPS[@]}"; do
+  printf "%s -> " "$ip"
+  curl -s "http://$ip/api/status" | jq -r '.state_en.last_update_at'
+done
+```
+
+```js
+// Ejemplo multi-placa (Node.js + node-fetch)
+// npm i node-fetch
+import fetch from "node-fetch";
+
+const ips = ["192.168.1.105", "192.168.1.106"]; // IPs de las placas
+const payload = { red: "0", yellow: "1", green: "1", peso: "88888" };
+
+(async () => {
+  for (const ip of ips) {
+    try {
+      const res = await fetch(`http://${ip}/post`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      console.log(ip, "OK", data.state_en.last_update_at);
+    } catch (e) {
+      console.error(ip, "ERROR:", e.message);
+    }
+  }
+})();
+```
 <!-- EPSILON_CONN_END -->
