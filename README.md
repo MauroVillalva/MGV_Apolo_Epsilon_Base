@@ -22,3 +22,15 @@
 1) Copiar proyecto a `~/MGV_E.S.E`
 2) `sudo bash bootstrap.sh`  (crea venv, servicio, nginx, mDNS)
 3) Probar: `curl http://semaforo.local/api/status`
+
+---
+
+## 🚀 Instalación rápida (Raspberry Pi OS)
+
+Requiere `git` y `sudo`. El script crea/usa un virtualenv, instala dependencias y configura los servicios.
+
+### Opción A — Usuario **Argos**
+```bash
+sudo apt update && sudo apt install -y git python3-venv
+bash -lc 'set -e; REPO=https://github.com/MauroVillalva/MGV_Apolo_Epsilon_Base.git; DIR=$HOME/MGV_Apolo_Epsilon_Base; [ -d "$DIR/.git" ] || git clone "$REPO" "$DIR"; git -C "$DIR" pull --ff-only; cd "$DIR"; ./bootstrap.sh'
+```
